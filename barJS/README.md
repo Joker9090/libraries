@@ -6,7 +6,6 @@ A little helper-lib instead of JQuery
 ### Content
 
 
-
 ```
 Object.prototype.getChilds(type,Val)
 Object.prototype.removeClass(className)
@@ -15,8 +14,11 @@ Object.prototype.hasClass(className)
 Object.prototype.banimate(o,duration,callback)
 Object.prototype.isNumber(className)
 checkAnchor()
-windowEventFunctions()
+windowEventFunctions() // removed in 1.2
 ExtraScripts()
+AutoDestructChecker(c,doOn,doWhile) // only in 1.2
+requestFullScreen() // only in 1.2
+checkMobile() // only in 1.2
 ```
 
 ### getChilds
@@ -103,22 +105,22 @@ CA.clean() // clean anchor
 CA.put("all")  // put #all in anchor
 ```
 
-### windowEventFunctions
 
-This function helps you to handle functions onresize
+### v1.2
 
-```
-WEF = new windowEventFunctions();
+## ADD AutoDestructChecker with params condition,doOnCondition,doWhileCondition
+Its like a setInterval with a selfDestroy button
+You have to pass functions in the params
 
-fn = function(){
-  console.log("resizing!")
-};
+## ADD requestFullScreen function to convert the webpage in FullScreen app
+Also with window.FULLSCREEN Var to ask if is in FULLSCREEN mode
 
-WEF.addResizeFunction(fn)
+## ADD checkMobile function to check if the browser is mobile
 
-```
+## REOVE windowEventFunctions function thats sucks
 
-### ExtraScripts
+
+### FOR ExtraScripts
 
 Please visit link
 
