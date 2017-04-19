@@ -108,16 +108,16 @@ CA.put("all")  // put #all in anchor
 
 ### v1.2
 
-## ADD AutoDestructChecker with params condition,doOnCondition,doWhileCondition
+#### ADD AutoDestructChecker with params condition,doOnCondition,doWhileCondition
 Its like a setInterval with a selfDestroy button
 You have to pass functions in the params
 
-## ADD requestFullScreen function to convert the webpage in FullScreen app
+#### ADD requestFullScreen function to convert the webpage in FullScreen app
 Also with window.FULLSCREEN Var to ask if is in FULLSCREEN mode
 
-## ADD checkMobile function to check if the browser is mobile
+#### ADD checkMobile function to check if the browser is mobile
 
-## REOVE windowEventFunctions function thats sucks
+#### REOVE windowEventFunctions function thats sucks
 
 
 ### FOR ExtraScripts
