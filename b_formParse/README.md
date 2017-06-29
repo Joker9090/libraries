@@ -1,4 +1,4 @@
-# formPase.js
+# formParse.js
 *Copyright (C) 2017 Juan Martin Cerruti*
 
 ### Basic use
