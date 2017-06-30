@@ -4,7 +4,7 @@ function serializeForm(form){
   for( var i = 0; i < elements.length; ++i ) {
       var element = elements[i];
       var name = element.name;
-      var value = element.value;
+      var value = (element.value === "true") ? true : (element.value === "false") ? false : element.value;
 
       if( name ) {
           obj[ name ] = value;
