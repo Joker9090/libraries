@@ -5,6 +5,8 @@
 
 First you have yo load the b_formParse.js script in yout html.
 
+IMPORTANT -> This js cames with serializeForm function.
+For more info search b_serializeForm in my libs repo
 
 ### handle
 ```
