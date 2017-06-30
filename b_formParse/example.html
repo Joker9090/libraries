@@ -13,14 +13,27 @@
   <body>
 
     <form class="" action="index.html" method="post">
-      <input type="text" name="title" value="">
-      <input type="text" name="main.title" value="">
-      <input type="text" name="main.description" value="">
-      <input type="text" name="main.section.description" value="">
-      <input type="text" name="main.section.title" value="">
-      <input type="text" name="main.section.item[0]title" value="">
-      <input type="text" name="main.section.item[1]title" value="">
-      <input type="text" name="main.section.item[2]title" value="">
+      <input type="text" name="title" value="a">
+      <input type="text" name="main.title" value="b">
+      <input type="text" name="main.description" value="c">
+      <input type="text" name="main.section.description" value="d">
+      <input type="text" name="main.section.title" value="e">
+      <input type="text" name="main.section.item[0]" value="f">
+      <input type="text" name="main.section.item[1]" value="g">
+      <input type="text" name="main.section.item[2]" value="h">
+      <input type="text" name="main.section.itemTitle[0]title" value="i">
+      <input type="text" name="main.section.itemTitle[0]description" value="j">
+      <input type="text" name="main.section.itemTitle[1]title" value="k">
+      <input type="text" name="main.section.itemTitle[1]description" value="l">
+      <input type="text" name="main.section.itemTitle[2]title" value="m">
+      <input type="text" name="main.section.itemTitle[2]description" value="n">
+
+      <input type="text" name="main.section.itemObject[0]title" value="q">
+      <input type="text" name="main.section.itemObject[0]item.title" value="r">
+      <input type="text" name="main.section.itemObject[0]item.description" value="s">
+      <input type="text" name="main.section.itemObject[1]item.title" value="t">
+      <input type="text" name="main.section.itemObject[1]item.description" value="u">
+
       <input type="submit" value="check">
     </form>
     <script type="text/javascript">
@@ -28,10 +41,8 @@
       form.onsubmit = function(e){
         e.preventDefault();
         e.stopPropagation();
-        console.log(pritierObjCombine(serializeForm(form)))
-        console.log("done")
+        console.log("done",pritierObjCombine(serializeForm(form)))
       }
-
 
       function serializeForm(form){
         var obj = {};
@@ -66,64 +77,98 @@
         return removeEmpties(obj);
       }
 
-      function pritierObjCombine(obj){
+      pritierObjCombine = function(formObject){
 
-      function merge_options(obj1,obj2){
-            var obj3 = {};
-            for (var attrname in obj1) {
-              if(Array.isArray(obj1[attrname])){
-                obj3[attrname] = (obj3[attrname] === undefined) ? (Array().concat(obj1[attrname])) : obj3[attrname].concat(obj1[attrname]);
-              }else{
-                obj3[attrname] = (typeof obj1[attrname] == "object" && typeof obj3[attrname] == "object" ) ? merge_options(obj3[attrname],obj1[attrname]) : obj1[attrname];
-              }
-            }
-            for (var attrname in obj2) {
-              if(Array.isArray(obj2[attrname])){
-                obj3[attrname] = (obj3[attrname] === undefined) ? (Array().concat(obj2[attrname])) : obj3[attrname].concat(obj2[attrname]);
-              }else{
-                obj3[attrname] = (typeof obj2[attrname] == "object" && typeof obj3[attrname] == "object" ) ? merge_options(obj3[attrname],obj2[attrname]) : obj2[attrname];
-              }
-            }
-            return obj3;
+        function getNumberOfArrayVal(string){
+            return parseInt(string.replace("[","").replace("]",""))
         }
-
-        var newObj = {}
-        for (var variable in obj) {
-          if (obj.hasOwnProperty(variable)) {
-            var is = (variable.indexOf(".") >= 0 && ( variable.indexOf(".") < variable.search(/(\[\d\])/) || variable.search(/(\[\d\])/) < 0 ) )
-            ? "obj"
-            : (variable.indexOf("]") >= 0 && ( variable.search(/(\[\d\])/) < variable.indexOf(".") || variable.indexOf(".") < 0 ) )
-            ? "arr"
-            : "var";
-            switch (is) {
-              case "obj":
-                var nameSplitted = variable.split(".");
-                var name = nameSplitted[0];
-                nameSplitted.shift();
-                var innerKey = nameSplitted.join(".");
-                newObj[name] = merge_options(newObj[name],pritierObjCombine({ [innerKey] : obj[variable]}));
-              break;
-              case "arr":
-                var nameSplitted = variable.split(/(\[\d\])/);
-                var name = nameSplitted[0];
-                nameSplitted.shift();
-                var innerKey = "";
-                for (var i = 1; i < nameSplitted.length; i++) {
-                  innerKey += nameSplitted[i] + ( ( (i+1) == nameSplitted.length) ? "" : "["+i+"]");
-                }
-                newObj[name] = [pritierObjCombine({[innerKey] : obj[variable]})];
-              break;
-              default:
-                newObj[variable] = obj[variable];
+        function merge_options(obj1,obj2){
+          var obj3 = {};
+          for (var attrname in obj1) {
+            if(Array.isArray(obj1[attrname])){
+              obj3[attrname] = (obj3[attrname] === undefined) ? (Array().concat(obj1[attrname])) : obj3[attrname].concat(obj1[attrname]);
+            }else{
+              obj3[attrname] = (typeof obj1[attrname] == "object" && typeof obj3[attrname] == "object" ) ? merge_options(obj3[attrname],obj1[attrname]) : obj1[attrname];
             }
-
           }
+          for (var attrname in obj2) {
+            if(Array.isArray(obj2[attrname])){
+              obj3[attrname] = (obj3[attrname] === undefined) ? (Array().concat(obj2[attrname])) : obj3[attrname].concat(obj2[attrname]);
+            }else{
+              obj3[attrname] = (typeof obj2[attrname] == "object" && typeof obj3[attrname] == "object" ) ? merge_options(obj3[attrname],obj2[attrname]) : obj2[attrname];
+            }
+          }
+          return obj3;
         }
-        return newObj
+
+        RunParser = function(formObject){
+
+          function engine(fo){
+            var newObj = {};
+            var arrayPos = [];
+            for (var variable in fo) {
+              if (fo.hasOwnProperty(variable)) {
+                var is = (variable.indexOf(".") >= 0 && ( variable.indexOf(".") < variable.search(/(\[\d\])/) || variable.search(/(\[\d\])/) < 0 ) )
+                ? "obj"
+                : (variable.indexOf("]") >= 0 && ( variable.search(/(\[\d\])/) < variable.indexOf(".") || variable.indexOf(".") < 0 ) )
+                ? "arr"
+                : "var";
+
+                switch (is) {
+                  case "obj":
+                    var nameSplitted = variable.split(".");
+                    var name = nameSplitted[0];
+                    nameSplitted.shift();
+                    var innerKey = nameSplitted.join(".");
+                    newObj[name] = merge_options(newObj[name], { [innerKey] : fo[variable] });
+                  break;
+                  case "arr":
+                    var nameSplitted = variable.split(/(\[\d\])/);
+                    var number = getNumberOfArrayVal(nameSplitted[1])
+                    var name = nameSplitted[0];
+                    nameSplitted.shift();
+                    var innerKey = "";
+                    for (var i = 1; i < nameSplitted.length; i++) {
+                      innerKey += nameSplitted[i] + ( ( (i+1) == nameSplitted.length) ? "" : "["+i+"]");
+                    }
+                    if(newObj[name] === undefined){
+                      newObj[name] = [];
+                    }
+                    if(newObj[name][number] === undefined){
+                      newObj[name].push(engine( { [innerKey] : fo[variable] } ))
+                    }else{
+                      newObj[name][number] = Object.assign({},newObj[name][number],engine( { [innerKey] : fo[variable] } ))
+                    }
+                  break;
+                  default:
+                    if(variable !== "" && variable !== "0"){
+                      newObj[variable] = fo[variable]
+                    }else{
+                      newObj = fo[variable];
+                    }
+                  break;
+                }
+              }
+            }
+            for (var variable in newObj) {
+              if (newObj.hasOwnProperty(variable)) {
+                if(Array.isArray(newObj[variable])){
+                  for (var i = 0; i < newObj[variable].length; i++) {
+                    newObj[variable][i] = (typeof newObj[variable][i] === "object") ? engine(newObj[variable][i]) : newObj[variable][i]
+                  }
+                }else{
+                  newObj[variable] = (typeof newObj[variable] === "object") ? engine(newObj[variable]) : newObj[variable]
+                }
+              }
+            }
+            return newObj;
+          }
+          return engine(formObject)
+        }
+
+        return new RunParser(formObject);
+
       }
-
-
-
     </script>
   </body>
 </html>
