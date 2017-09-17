@@ -45,4 +45,21 @@ CanvasEvents = function(){
     }
 
   }()
+
+  ce_self.addClickEvent = function(canvas, ks){
+    canvas.onclick = function(event){
+      var rect = canvas.getBoundingClientRect();
+      var x = event.clientX - rect.left;
+      var y = event.clientY - rect.top;
+      for (var i = 0; i < ks.length; i++) {
+        if(typeof ks[i].clickInside == "function"){
+          if(( x > ks[i].drawPosX() && x < ks[i].drawPosX()+ks[i].width )
+          &&( y > ks[i].drawPosY() && y < ks[i].drawPosY() + ks[i].height )){
+            ks[i].clickInside();
+          }
+        }
+      }
+    }
+  }
+
 }
