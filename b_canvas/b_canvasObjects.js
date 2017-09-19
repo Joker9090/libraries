@@ -1,5 +1,5 @@
 CanvasObjects = function(){
-  console.log("[COM] Create CanvasObject");
+
   GID = -1;
   getID = function(){
     GID++;
@@ -27,6 +27,7 @@ CanvasObjects = function(){
     this.focusXEnabled = false;
     this.focusYEnabled = false;
     this.focusedObject = {};
+    this.log = false;
 
     this.drawPosX = function(obj){
       if(obj.type == "mapObjectNotFocused") return obj.posX
@@ -291,7 +292,7 @@ CanvasObjects = function(){
       cm_obj = (typeof name == "object") ? this.mergeObjects(name,cm_obj) : cm_obj;
       if(typeof this.objectsByLayer[cm_obj.layer] == "undefined") this.objectsByLayer[cm_obj.layer] = Array();
       this.objectsByLayer[cm_obj.layer][this.objectsByLayer[cm_obj.layer].length] = cm_obj;
-      console.log("[COM] Create map {"+this.id+"}")
+      if (this.log == true) console.log("[COM] Create map {"+this.id+"}")
       return cm_obj;
     }
     this.removeObject = function(o){
@@ -300,7 +301,7 @@ CanvasObjects = function(){
           this.objectsByLayer[o.layer].splice(i, 1);
         }
       }
-      console.log("[COM] Remove object {"+this.id+"}")
+      if (this.log == true) console.log("[COM] Remove object {"+this.id+"}")
     }
     this.createObject = function(type){
       this._mapsimageTotals++;
@@ -396,13 +397,14 @@ CanvasObjects = function(){
       _object = (typeof type == "object") ? this.mergeObjects(type,_object) : _object;
       if(typeof this.objectsByLayer[_object.layer] == "undefined") this.objectsByLayer[_object.layer] = Array();
       this.objectsByLayer[_object.layer][this.objectsByLayer[_object.layer].length] = _object;
-      console.log("[COM] Create object {"+this.id+"}")
+      if (this.log == true) console.log("[COM] Create object {"+this.id+"}")
       return _object;
     }
 
     this.gravityForcesIds = -1;
     this.gravityForces = Array();
     this.startGravity = function(l){
+      if (this.log == true) console.log("[COM] start Gravity  {"+this.id+"}")
       this.gravityForcesIds++;
       g_obj = {};
       g_obj.name = "GRAVITY";
@@ -410,6 +412,7 @@ CanvasObjects = function(){
       g_obj.layer = l;
       g_obj.force = (9.8/10)*(-1)
       g_obj.setGravity = function(newVal){
+        if (this.log == true) console.log("[COM] set Gravity "+newVal+" {"+this.id+"}")
         this.force = (newVal/10)*(-1)
       };
       this.gravityForces[g_obj.id] = g_obj;
@@ -435,13 +438,14 @@ CanvasObjects = function(){
         }
       }
       CANVAS_INTERVAL_FUNCTIONS[CANVAS_INTERVAL_FUNCTIONS.length] = intervalObject
-      console.log("[COM] Add Gravity {"+this.id+"}")
+      if (this.log == true) console.log("[COM] Add Gravity {"+this.id+"}")
       return g_obj;
     }
 
     this.XFORCESIds = -1;
     this.XFORCES = Array();
     this.startXFORCES = function(l){
+      if (this.log == true) console.log("[COM] start XForce {"+this.id+"}")
       this.XFORCESIds++;
       xf_obj = {};
       xf_obj.name = "X_FORCE";
@@ -469,7 +473,7 @@ CanvasObjects = function(){
         }
       }
       CANVAS_INTERVAL_FUNCTIONS[CANVAS_INTERVAL_FUNCTIONS.length] = intervalObject
-      console.log("[COM] Add Xforce {"+this.id+"}")
+      if (this.log == true) console.log("[COM] Add Xforce {"+this.id+"}")
       return xf_obj;
     }
 
@@ -477,6 +481,7 @@ CanvasObjects = function(){
     this.windsForces = Array();
     this.windsForcesInterval = Array();
     this.startWind = function(l){
+      if (this.log == true) console.log("[COM] start windForce {"+this.id+"}")
       this.windsForcesIds++;
       w_obj = {};
       w_obj.name = "WIND";
@@ -484,6 +489,7 @@ CanvasObjects = function(){
       w_obj.layer = l;
       w_obj.force = 1
       w_obj.setWindForce = function(newVal){
+        if (this.log == true) console.log("[COM] set windForce "+newVal+" {"+this.id+"}")
         this.force = newVal
       }
       this.windsForces[w_obj.id] = w_obj;
@@ -511,7 +517,7 @@ CanvasObjects = function(){
         }
       }
       CANVAS_INTERVAL_FUNCTIONS[CANVAS_INTERVAL_FUNCTIONS.length] = intervalObject
-      console.log("[COM] Add WindForce {"+this.id+"}")
+      if (this.log == true) console.log("[COM] Add WindForce {"+this.id+"}")
       return w_obj;
     };
 
@@ -519,6 +525,8 @@ CanvasObjects = function(){
     this.EXTRAFORCES = Array();
     this.EXTRAFORCESInterval = Array();
     this.startEXTRAFORCES = function(l,axis,type){
+
+      if (this.log == true) console.log("[COM] start ExtraForce {"+this.id+"}")
       this.EXTRAFORCESIds++;
       extraxf_obj = {};
       extraxf_obj.name = "EXTRA_FORCE";
@@ -528,6 +536,7 @@ CanvasObjects = function(){
       extraxf_obj.force = 1;
       extraxf_obj.type = type; // acelerate , constant
       extraxf_obj.setForce = function(newVal){
+        if (this.log == true) console.log("[COM] set ExtraForce "+newval+" {"+this.id+"}")
         this.force = newVal;
       }
       this.EXTRAFORCES[extraxf_obj.id] = extraxf_obj;
@@ -569,12 +578,12 @@ CanvasObjects = function(){
         }
       }
       CANVAS_INTERVAL_FUNCTIONS[CANVAS_INTERVAL_FUNCTIONS.length] = intervalObject
-      console.log("[COM] Add ExtraForce {"+this.id+"}")
+      if (this.log == true) console.log("[COM] Add ExtraForce {"+this.id+"}")
       return extraxf_obj;
 
     }
 
-    console.log("[COM] Create CanvasObjectManager {"+this.id+"}")
+    if (this.log == true) console.log("[COM] Create CanvasObjectManager {"+this.id+"}")
     return this;
   }
 
