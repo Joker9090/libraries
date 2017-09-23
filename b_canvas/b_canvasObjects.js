@@ -425,13 +425,15 @@ CanvasObjects = function(){
           this.layer = parameter.gravityForces[this.id].layer;
           this.gravityForce = parameter.gravityForces[this.id].force;
           this.g_objects = parameter.objectsByLayer[this.layer];
-          for (var i = 0; i < this.g_objects.length; i++) {
-            if(this.g_objects[i].static == 0 ){
-              newY =  this.g_objects[i].posY+this.g_objects[i].Y_Force
-              if(this.g_objects[i].Y_Force != 0 && this.g_objects[i].Y_Force > 0){
-                if(this.g_objects[i].setPosY(newY)) this.g_objects[i].Y_Force = (this.g_objects[i].Y_Force + this.gravityForce) / ((this.g_objects[i].mass > 0) ? this.g_objects[i].mass : 1) ;
-              }else {
-                if(this.g_objects[i].setPosY(newY)) this.g_objects[i].Y_Force = (this.g_objects[i].Y_Force + this.gravityForce) / ((this.g_objects[i].wind_resistence > 0) ? this.g_objects[i].wind_resistence : 1) ;
+          if(typeof this.g_objects != "undefined" && this.g_objects.length > 0){
+            for (var i = 0; i < this.g_objects.length; i++) {
+              if(this.g_objects[i].static == 0 ){
+                newY =  this.g_objects[i].posY+this.g_objects[i].Y_Force
+                if(this.g_objects[i].Y_Force != 0 && this.g_objects[i].Y_Force > 0){
+                  if(this.g_objects[i].setPosY(newY)) this.g_objects[i].Y_Force = (this.g_objects[i].Y_Force + this.gravityForce) / ((this.g_objects[i].mass > 0) ? this.g_objects[i].mass : 1) ;
+                }else {
+                  if(this.g_objects[i].setPosY(newY)) this.g_objects[i].Y_Force = (this.g_objects[i].Y_Force + this.gravityForce) / ((this.g_objects[i].wind_resistence > 0) ? this.g_objects[i].wind_resistence : 1) ;
+                }
               }
             }
           }
@@ -460,13 +462,15 @@ CanvasObjects = function(){
           this.id = id
           this.layer = parameter.XFORCES[this.id].layer;
           this.XForces_objects = parameter.objectsByLayer[this.layer];
-          for (var i = 0; i < this.XForces_objects.length; i++) {
-            if(this.XForces_objects[i].static == 0 ){
-              newX =  this.XForces_objects[i].posX+this.XForces_objects[i].X_Force
-              if(this.XForces_objects[i].X_Force != 0 && this.XForces_objects[i].X_Force > 0){
-                if(this.XForces_objects[i].setPosX(newX)) this.XForces_objects[i].X_Force = (this.XForces_objects[i].X_Force + (this.XForces_objects[i].friction*(-1)/100)  )  ;
-              }else if(this.XForces_objects[i].X_Force != 0 && this.XForces_objects[i].X_Force < 0){
-                if(this.XForces_objects[i].setPosX(newX)) this.XForces_objects[i].X_Force = (this.XForces_objects[i].X_Force + (this.XForces_objects[i].friction/100) ) ;
+          if(typeof this.XForces_objects != "undefined" && this.XForces_objects.length > 0){
+            for (var i = 0; i < this.XForces_objects.length; i++) {
+              if(this.XForces_objects[i].static == 0 ){
+                newX =  this.XForces_objects[i].posX+this.XForces_objects[i].X_Force
+                if(this.XForces_objects[i].X_Force != 0 && this.XForces_objects[i].X_Force > 0){
+                  if(this.XForces_objects[i].setPosX(newX)) this.XForces_objects[i].X_Force = (this.XForces_objects[i].X_Force + (this.XForces_objects[i].friction*(-1)/100)  )  ;
+                }else if(this.XForces_objects[i].X_Force != 0 && this.XForces_objects[i].X_Force < 0){
+                  if(this.XForces_objects[i].setPosX(newX)) this.XForces_objects[i].X_Force = (this.XForces_objects[i].X_Force + (this.XForces_objects[i].friction/100) ) ;
+                }
               }
             }
           }
