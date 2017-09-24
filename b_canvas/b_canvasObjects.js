@@ -349,6 +349,8 @@ CanvasObjects = function(){
         YContactFunction: "",
         ContactFunction: "",
         solid:1,
+        type: "mapObject", //"mapObjectNotFocused"
+        distance:1,
         static: 0,
         canRemove: 0,
         remove: "",
@@ -379,11 +381,11 @@ CanvasObjects = function(){
         posY: 0,
         drawPosX: function(){
           if(this.type == "mapObjectNotFocused") return this.posX
-          return (this.parent.focusXEnabled ) ? this.posX - this.parent.focusedObject.posX + this.parent.focusedObject.startPosX : this.posX;
+          return (this.parent.focusXEnabled ) ? (this.posX - this.parent.focusedObject.posX*this.distance + this.parent.focusedObject.startPosX) : this.posX;
         },
         drawPosY: function(){
           if(this.type == "mapObjectNotFocused") return this.parent.fixHeightInvert( this.posY )
-          return  this.parent.fixHeightInvert( (this.parent.focusYEnabled) ? (this.posY - this.parent.focusedObject.posY + this.parent.focusedObject.startPosY) : this.posY )
+          return  this.parent.fixHeightInvert( (this.parent.focusYEnabled) ? (this.posY - this.parent.focusedObject.posY*this.distance + this.parent.focusedObject.startPosY) : this.posY )
         },
         focusPosX: 0,
         focusPosY: 0,
