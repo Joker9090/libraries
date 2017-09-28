@@ -511,12 +511,13 @@ CanvasObjects = function(){
             if(parameter.XFORCES[k].layer == this.layer) this.makeForce = false;
           }
           this.wind_objects = parameter.objectsByLayer[this.layer];
-
-          for (var i = 0; i < this.wind_objects.length; i++) {
-            this.wind_objects[i].X_Force = parameter.windsForces[id].force * this.wind_objects[i].windSpeed+1;
-            if(this.wind_objects[i].X_Force > 0){
-              if(this.makeForce){
-                this.wind_objects[i].setPosX(this.wind_objects[i].posX + this.wind_objects[i].X_Force)
+          if(typeof this.wind_objects != "undefined" && this.wind_objects.length > 0){
+            for (var i = 0; i < this.wind_objects.length; i++) {
+              this.wind_objects[i].X_Force = parameter.windsForces[id].force * this.wind_objects[i].windSpeed+1;
+              if(this.wind_objects[i].X_Force > 0){
+                if(this.makeForce){
+                  this.wind_objects[i].setPosX(this.wind_objects[i].posX + this.wind_objects[i].X_Force)
+                }
               }
             }
           }
